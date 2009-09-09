@@ -1,0 +1,1 @@
+Artikelnr;Benämning;Fabrikat;Tillverk.art.nr.;Pris;PrismMoms;EAN;Bild;Beskrivning;Specifikation;LagerSaldo;LevTid

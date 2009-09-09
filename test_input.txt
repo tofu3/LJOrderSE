@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/content.css">
+<script type="text/javascript" language="JavaScript" src="include/util.js"></script>
+<script>
+function add() {
+	var f = document.frm; 
+	
+	addtocart('','S1031',f.ArtNo2872Quantity.value,-1,'',0);
+	return false;
+}
+function OnExpand(uid, url)
+{
+	if(url) open(url, "ohmenu");
+	parent.ohmenu.document.tre.NODEID.value = uid;
+	parent.ohmenu.document.tre.OPERATION.value = "expand";
+	parent.ohmenu.document.tre.submit();
+}
+function OnVisible(uid, tops, make)
+{
+	parent.ohmenu.document.tre.NODEID.value = uid;
+	parent.ohmenu.document.tre.OPERATION.value = "visible";
+
+	var endPos = uid.indexOf("|");	var cat = "0";
+	
+	if (endPos==-1) endPos = uid.length;
+
+	uid = uid.slice(1,endPos)
+
+	/*if (uid.indexOf(",") > 0)
+	{
+		cat = uid.slice(uid.indexOf(",")+1)
+		uid = uid.slice(0,uid.indexOf(","))
+	}*/
+	
+	if (!make) make="";
+		
+	if (tops=="1")
+		parent.ohmain.location.href = "categorytop.asp?category=" + uid + "&Limit=" + 9 + "&TreeType=1" + "&Make=" + make
+	parent.ohmenu.document.tre.action = "tree.asp#C" + uid;
+	parent.ohmenu.document.tre.submit();
+}
+
+function OnOpenLeaf(url,uid)
+{
+	parent.ohmain.location.href = url;
+
+	parent.ohmenu.document.tre.NODEID.value = uid;
+	parent.ohmenu.document.tre.OPERATION.value = "visible";
+	parent.ohmenu.document.tre.submit();
+}
+function toggleDescText() 
+{
+	
+	if (document.getElementById("expandDescText").style.display == "none")
+	{
+		document.getElementById("expandDescText").style.display = "";
+		document.getElementById("moreDescText").innerHTML = "Dölj...";
+	}
+	else
+	{
+		document.getElementById("expandDescText").style.display = "none";
+		document.getElementById("moreDescText").innerHTML = "Visa mer...";
+	}
+}
+function toggleDescSpec() 
+{
+	
+	if (document.getElementById("expandDescSpec").style.display == "none")
+	{
+		document.getElementById("expandDescSpec").style.display = "";
+		document.getElementById("moreDescSpec").innerHTML = "Dölj...";
+	}
+	else
+	{
+		document.getElementById("expandDescSpec").style.display = "none";
+		document.getElementById("moreDescSpec").innerHTML = "Visa mer...";
+	}
+}
+function toggleAccessories()
+{
+
+	
+		document.getElementById("moreAcc").innerHTML = "Visa fler..."	
+		document.getElementById("accessorieCount").value = -1
+		document.frm.submit();
+	
+
+}
+
+</script>
+</head>
+<body class="main">
+
+<h3>Remington Plattång Sleek & Curl slim</h3>
+
+<a href="javascript:OnVisible('C10','1')">Personvård</a> / <a href="javascript:OnVisible('C67|C10','1')">Hårvård</a> / <a href="javascript:OnOpenLeaf('category.asp?CategoryIdentifier=P02G&TreeType=1','C375|C10|C67');">Plattänger</a> / <br>
+
+<br><br>
+
+
+<form name="frm" onSubmit="return add();">
+<input type="hidden" name="accessorieCount" id="accessorieCount" value="10">
+<input type="hidden" name="articleNo" id="articleNo" value="S1031">
+<input type="hidden" name="referer" id="referer" value="">
+<table border="0" cellpadding="2" cellspacing="0" width="680">
+<tr>
+	<td width="200" valign="top"><img src="http://images.order.se/S1031.JPG" alt="S1031"></td>
+	<td width="80">&nbsp;</td>
+	<td width="290" valign="top">
+	
+	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+	<!--
+	<tr>
+		<td><b>EAN: 4008496545339</b></td>
+	</tr>
+	<tr>
+		<td>Plattång Sleek &amp; Curl slim</td>
+	</tr>
+	-->
+	<tr>
+		<td>
+		
+		<table border="0" cellpadding="0" cellspacing="0" align="left">
+		<tr>
+			<td align="left"><b>Artnr: S1031</b></td>
+		</tr>
+		<tr>
+
+			<td align="left"><b>EAN: 4008496545339</b></td>
+		</tr>
+		
+		<tr>
+			
+		</tr>
+		
+		</table>
+		
+		</td>
+	</tr>
+	</table>
+
+	
+	</td>
+</tr>
+<tr>
+	<td colspan="3">&nbsp;</td>
+</tr>
+<tr>
+	<td colspan="3">Keramisk</td>
+</tr>
+	
+	<tr>
+		<td colspan="3">&nbsp;</td>
+	</tr>
+
+	<tr>
+		<td colspan="3"><b>Beskrivning</b><br>Rakt eller lockigt, nu behöver du inte bekymra dig mer,<br>med Remington’s nya plattång Sleek & Curl kan du enkelt skifta från glänsande rakt hår till spänstiga lockar.<br>Hemligheten ligger i plattångens unika design plus den exklusiva styling-DVD’n som visar spännande tips och råd.<br>Denna plattång har allt för att säkra dig oändligt snygga stilar och frisyrer.<br>• Keramiskt-, Tourmaline- & Teflon®belagda smala plattor<br>• Snabb uppvärmning – klar på 60 sekunder<br>• LCD display med digital värmeinställning från 130°C - 200°C<br>• Automatisk säkerhetsavstängning<br>• Snygg förvaringsväska med värmetålig påse<br>• ”Curls Secrets“ DVD<br><span name="expandDescText" id="expandDescText" style="display: none"><br>
+
+			</span><a id="moreDescText" href="javascript:toggleDescText()">Visa mer...</a>
+		
+		</td>
+	</tr>
+	
+<tr>
+	<td colspan="3">
+	
+	</td>
+</tr>
+	
+
+</table>
+
+</form>
+<input type="button" class="btn" value="Tillbaka" onClick="history.go(-1);">
+
+</body>
+</html>
+<!-- 1,188 -->
