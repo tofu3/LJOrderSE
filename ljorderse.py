@@ -17,8 +17,10 @@ from libt3httpget import *
 import ConfigParser
 from string import Template
 
+# Hard coded config file name
 confFile = 'ljorderse.conf'
 
+# List of the output level names
 ollist = ['limited','full']
 
 # Short function: Print to stdout without spaces or newlines
