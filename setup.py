@@ -12,7 +12,7 @@ setup(
     options = {'py2exe': {'optimize': 2, 'bundle_files': 1}},
     console = [{
         'script': "ljorderse.py",
-        "icon_resources": [(0, "t3.ico")]
+        "icon_resources": [(0, "res/t3.ico")]
         }],
     zipfile = None,
 )

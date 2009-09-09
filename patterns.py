@@ -8,7 +8,7 @@
 ########################################
 
 import re
-from libtofu import *
+from libt3httpget import *
 import string
 
 reAN  = re.compile('width="50"><a href="article\.asp\?ArticleNo=([^&]*)&')

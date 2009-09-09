@@ -1,3 +1,0 @@
-FAILURE LOG
-¯¯¯¯¯¯¯¯¯¯¯
-Could not fetch data from http://www.order.se/article.asp?ArticleNo=S1031
