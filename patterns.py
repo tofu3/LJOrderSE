@@ -8,6 +8,7 @@
 ########################################
 
 import re
+import urllib # Used for encoding article numbers
 from libt3httpget import *
 import string
 
@@ -21,15 +22,19 @@ reExt = re.compile('Ditt pris: <span class="articlecustomerprice">([0-9]*.?[0-9]
 reDCL = re.compile('(.*)<span name="expandDescText" id="expandDescText" style="display: none">(.*)\s*</span><a id="moreDescText" href="javascript:toggleDescText\(\)">\s*Visa mer...</a>\s*')
     
 def anparse(a,ol = 0):
-    ares = httpget('http://www.order.se/article.asp?ArticleNo=%s' % a)
+    uea = urllib.quote_plus(a)
+    ares = httpget('http://www.order.se/article.asp?ArticleNo=%s' % uea)
+    
+    #BEGIN DEBUG CODE (NOT USED)
     #sa = a
     #transtable = string.maketrans("/","_")
     #sa.translate(transtable) 
     #f = file('test/%s.txt' % sa,'w')
     #f.write(ares)
     #f.close()
+    #END DEBUG CODE
+
     arr = strparse(ares)
-    #return "%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s\n" % strparse(ares)
     
     if arr['Name']:
         if arr['Desc'] and ol:
@@ -111,7 +116,7 @@ def saparse(i):
 '''
 
 if __name__ == '__main__':
-    
+    '''
     f = open('test_input.txt','r')
     html = f.read()
     out = strparse(html)
@@ -119,5 +124,9 @@ if __name__ == '__main__':
         if ident == 'Desc':
             val = cleandesc(val,'\nDescFort: ')
         print '%s: %s' % (ident,val)
+    '''
     
-    #print stripmultispaces('lala    lalalala  fniz fniz kaka   ka     ka ka    ka ka')
+    # Url encoding tests:
+    print urllib.quote_plus('893jt.-åäö 3-//-asdå__2%') # Spaces -> +
+    print urllib.quote('893jt.-åäö 3-//-asdå__2%','')   # Spaces -> %20
+    print urllib.quote('893jt.-åäö 3-//-asdå__2%')      # Spaces -> %20, Keep slashes
