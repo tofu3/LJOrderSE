@@ -20,7 +20,15 @@ reDsc = re.compile('<td colspan="3"><b>Beskrivning</b>(.*?)</td>', re.DOTALL)
 reSpc = re.compile('<b>Specifikationer</b><br><br>(.*?)<br><br>')
 reExt = re.compile('Ditt pris: <span class="articlecustomerprice">([0-9]*.?[0-9]*,[0-9]*) SEK</span></td>\s*</tr>\s*<tr>\s*<td>&nbsp;</td>\s*</tr>\s*<tr>\s*<td align="left">Lagersaldo: ([0-9]+)</td>\s*</tr>\s*<tr>\s*<td align="left">([^<]*)</td>')
 reDCL = re.compile('(.*)<span name="expandDescText" id="expandDescText" style="display: none">(.*)\s*</span><a id="moreDescText" href="javascript:toggleDescText\(\)">\s*Visa mer...</a>\s*')
-    
+reAUT = re.compile('redan inloggat') 
+   
+def authok(data):
+    m = reAUT.search(data)
+    if m:
+        return False
+    else:
+        return True
+   
 def anparse(a,ol = 0):
     uea = urllib.quote_plus(a)
     ares = httpget('http://www.order.se/article.asp?ArticleNo=%s' % uea)
@@ -107,13 +115,10 @@ def strparse(s):
     pr2 = ii
     return {'OwnArtNum':oan, 'Name':nam, 'ArtNum':a, 'Price':prc, 'Price2':pr2, 'EAN':ean, 'Image':img, 'Desc':dsc, 'Spec':spc, 'Stock':stk, 'DTM':dtm}
 
-# Not needed, kept in case of later use:
-'''
 def saparse(i):
     sres = httpget('http://www.order.se/searchbyarticle.asp?Sort=0&SortOrder=0&mode=searcharticle&searchType=0&SearchPhrase=&Page=%d' % i)
     m = reAN.findall(sres)
     return m
-'''
 
 if __name__ == '__main__':
     '''

@@ -15,7 +15,9 @@ import sys,re,urllib,os,urllib2
 from patterns import *
 from libt3httpget import *
 import ConfigParser
+from datetime import date
 from string import Template
+import urllib
 
 # Hard coded config file name
 confFile = 'ljorderse.conf'
@@ -51,7 +53,7 @@ def auth(n,u,p):
     f = opener.open('http://www.order.se/logindo.asp', params)
     data = f.read()
     f.close()
-    return data
+    return authok(data)
     
 # Format data list as a CSV-type string
 def dataformat(arr,ano):
@@ -63,6 +65,7 @@ def dataformat(arr,ano):
 
 # Main function
 if __name__ == "__main__":
+    getall = False
     x = chr(int('B0', 16))
     y = chr(int('B1', 16))
     z = chr(int('B2', 16))
@@ -72,9 +75,11 @@ if __name__ == "__main__":
     if len(sys.argv)>1:
         if sys.argv[1] == '--full' or sys.argv[1] == '-f':
             outlevel = 1
+        elif sys.argv[1] == '--get-all':
+            getall = True
         else:
-            print ' Usage: ljorderse [-f|--full]\n -f or --full   Fetch all data, including description.\n'
-            raw_input(' Press any key to quit...')
+            print ' Usage: ljorderse [-f|--full|--get-all]\n\n -f or --full   Fetch all data, including description.\n --get-all      Get ALL articles from order.se, not just the ones in the input database.'
+            raw_input('\n Press any key to quit...')
             sys.exit()
     print ' Output level: %s.' % ollist[outlevel]
     print ' Reading settings...',
@@ -89,17 +94,44 @@ if __name__ == "__main__":
     for i in range(0,len(Pass)):
         PassMask += '*'
     print 'OK'
-    print ' Reading input data file...',
-    if not os.path.isfile(INP):
-        print "Error!\n\n Input data file does not exist. Please edit the configuration file.\n"
-        raw_input(' Press any key to quit...')
+    if not getall:
+        print ' Reading input data file...',
+        if not os.path.isfile(INP):
+            print "Error!\n\n Input data file does not exist. Please edit the configuration file.\n"
+            raw_input(' Press any key to quit...')
+            sys.exit()
+        print " "
+        artnos = getartnos(INP)
+        print '  + Got %d entries.' % len(artnos)
+    else:
+        print ' Fetching articles from remote site...'
+        print '  + Warning: This will take a while!'
+        i = 1
+        m = 1
+        o = []
+        while m:
+            i += 1
+            m = saparse(i)
+            print '  + Got %d entries...' % len(m)
+            for a in m:
+                o.append(a)
+        print '  + Total: %d entries...' % len(o)
+        dmpfile = 'get-all-dump-'+date.today().strftime("%y%m%d")+'.skv'
+        print ' Saving data to "'+dmpfile+'"...'
+        try: os.remove(dmpfile)
+        except: pass
+        for a in o:
+            _f(urllib.unquote_plus(a)+';\n',dmpfile)
+        raw_input('\n Press any key to quit...')
         sys.exit()
-    print " "
-    artnos = getartnos(INP)
-    print '  + Got %d entries.' % len(artnos)
+
     if CustNo and User and Pass:
         print ' Logging in with: #:%s U:%s P:%s...' % (CustNo,User,PassMask),
-        auth(CustNo,User,Pass)
+        if not auth(CustNo,User,Pass):
+            print "Error!"
+            print " Authentication failed: You are already signed in somewhere else.\n"
+            raw_input(" Press any key to continue...")
+            sys.exit(3)
         print "OK"
         print ' + Cookies:'
         for cookie in jar:
